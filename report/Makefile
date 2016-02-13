@@ -5,9 +5,15 @@ sections: $(shell find sections -type f)
 
 figures: $(shell find figures -type f)
 
-final.pdf: sections figures final.tex
+final.pdf: final.bbl final.aux
 	pdflatex ./final.tex
 	pdflatex ./final.tex
+
+final.dat: final.tex sections figures
+	pdflatex ./final.tex
+
+final.bbl: final.dat
+	bibtex final.aux
 
 .PHONY: clean
 clean:
